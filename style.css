@@ -216,6 +216,10 @@ footer a { color: var(--muted); text-decoration: none; }
 footer a:hover { color: var(--accent); }
 footer .who { color: var(--text); font-weight: 600; }
 
+/* The font credit sits on the far right, away from the navigation links, so it
+   reads as a credit rather than as one more page of the site. */
+footer .lic { margin-left: auto; opacity: .72; }
+
 /* ---------------- narrow screens ---------------- */
 
 @media (max-width: 700px) {
