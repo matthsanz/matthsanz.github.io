@@ -98,8 +98,14 @@
     <a href="support/">Support</a>
     <!-- Font credit, pushed right so it reads as a credit and not as a page.
          The OFL is already satisfied by the license file sitting next to the
-         .woff2 files; this link only makes it reachable by clicking. -->
-    <a class="lic" href="assets/fontes/Inter-LICENSE-OFL.txt">Inter (OFL)</a>
+         .woff2 files; this link only makes it reachable by clicking.
+         New tab so a reader does not lose the site over a compliance link.
+         rel="noopener" because target="_blank" otherwise hands the opened page
+         a handle to this one. aria-label because "Inter (OFL)" alone tells a
+         screen reader nothing, and a new tab with no warning is worse there. -->
+    <a class="lic" href="assets/fontes/Inter-LICENSE-OFL.txt"
+       target="_blank" rel="noopener"
+       aria-label="Inter typeface licence, SIL Open Font License — opens in a new tab">Inter (OFL)</a>
   </div>
 </footer>
 
