@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rowsmith — Matthsanz</title>
+<meta name="description" content="Edit hundreds of ScriptableObjects as rows in one table, inside the Unity Editor. Export to CSV, edit in Excel, bring it back — and approve every change before a single asset is written.">
+
+<!-- What Discord, Slack, Twitter and every link preview show. These URLs
+     must be absolute: a link preview has no page to resolve them against. -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://matthsanz.github.io/rowsmith/">
+<meta property="og:title" content="Rowsmith — Matthsanz">
+<meta property="og:description" content="Edit hundreds of ScriptableObjects as rows in one table, inside the Unity Editor. Approve every change before a single asset is written.">
+<meta property="og:image" content="https://matthsanz.github.io/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/marca.png">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="bar">
+    <a class="mark" href="../">Matthsanz</a>
+    <nav>
+      <a href="./" class="here">Rowsmith</a>
+      <a href="../support/">Support</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <div class="hero prose">
+    <h1><span class="row">Row</span>smith</h1>
+    <p class="lede">Change everything. Break nothing.</p>
+    <p>
+      <strong>Edit hundreds of ScriptableObjects as rows in one table, inside the Unity
+      Editor.</strong> Export to CSV, edit in Excel or Google Sheets, bring it back — and approve
+      every change before a single asset is written.
+    </p>
+  </div>
+
+  <!-- Captions are baked into these images (built in the store-artwork pass);
+       the alt text carries the same words for screen readers and search. -->
+  <section class="block">
+    <h2>What it does</h2>
+
+    <figure><img src="../assets/01-tabela.png"
+      alt="One asset at a time in the Inspector. All of them at once in the table. The same values, from the same file — 4658, 962, 820, 2025. 30 assets read in 23 ms."></figure>
+
+    <figure><img src="../assets/02-lote.png"
+      alt="It says what it will do, before it does it. 30 rows, Gold Reward multiplied by 2, and an example you can check against the table itself: Archdemon Overlord, 1984 to 3968."></figure>
+
+    <figure><img src="../assets/03-relatorio.png"
+      alt="And then it says what it did. 30 rows changed in 457 ms. The Inspector agrees: 2025 became 4050."></figure>
+
+    <figure><img src="../assets/04-recusa.png"
+      alt="It refuses rather than break your data. A value the enum does not have is rejected, the cell stays as it was — and the message names the ones that fit."></figure>
+
+    <figure><img src="../assets/05-filtro.png"
+      alt="The filter rules the batch. Tier is Boss leaves 6 rows of 30, and the bulk edit says 6 rows — not 30."></figure>
+
+    <figure><img src="../assets/06-escala.png"
+      alt="2,880 rows. No paging, no ceiling. Read in 226 ms, and the table scrolls all the way down. The 2,880 assets were duplicated locally for this test. The package ships 30 samples."></figure>
+  </section>
+
+  <section class="prose">
+    <h2>Compatibility</h2>
+    <ul class="rows">
+      <li>
+        <b>Unity 2022.3.62 through Unity 6.0 LTS.</b> Both ends were tested by importing this exact
+        package into an empty project and using it: <code>2022.3.62f3</code> and
+        <code>6000.0.66</code>.
+      </li>
+      <li>
+        <b>Unity 6.3 and 6.5 are not supported in this version.</b> Unity is replacing an editor API
+        this tool reads values with, and on 6.5 that replacement is already enforced, so the tool
+        does not compile there. Support for them is planned, and it needs a build of its own rather
+        than a change to this one.
+      </li>
+      <li><b>No render pipeline dependency.</b> <b>Tested on Windows 11.</b></li>
+    </ul>
+  </section>
+
+  <section class="prose">
+    <h2>What it touches, and what it does not</h2>
+    <ul>
+      <li>It works <strong>offline</strong>. No network access, no telemetry, no account, no activation.</li>
+      <li>It <strong>reads</strong> <code>.asset</code> files under <code>Assets/</code>. It does not read <code>Packages/</code>.</li>
+      <li>It <strong>exports</strong> only to the file you pick in the save dialog, and <strong>imports</strong> only the file you pick.</li>
+      <li><strong>The tool itself is Editor-only and adds nothing to your build.</strong></li>
+    </ul>
+  </section>
+
+  <section class="prose">
+    <h2 id="known-limits">Known limits in this version</h2>
+
+    <div class="note">
+      <p>
+        This list is here on purpose. <strong>A tool that hides what it cannot do costs you the
+        afternoon you spend finding out.</strong>
+      </p>
+    </div>
+
+    <ul>
+      <li>An import updates assets that already exist. <strong>It never creates new ones.</strong></li>
+      <li>Sub-assets are not listed. A file holding several objects shows only its main one.</li>
+      <li>ScriptableObjects that live under <code>Packages/</code> are not listed.</li>
+      <li>Recompiling a script can clear Unity's undo stack, and your batch or import would go with it.</li>
+      <li>
+        An undo happens in the editor's memory. The files on disk only change when you save — this
+        is how Unity behaves everywhere, and Rowsmith says so in the status bar when it matters.
+      </li>
+    </ul>
+
+    <p>The full list ships inside the package, in the documentation.</p>
+  </section>
+
+  <section class="prose">
+    <h2>Support</h2>
+    <p>
+      Something not working, or a question about what it can do?
+      <a href="../support/">Support →</a>
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="bar">
+    <span class="who">Matthsanz</span>
+    <a href="../">Home</a>
+    <a href="../support/">Support</a>
+  </div>
+</footer>
+
+</body>
+</html>
