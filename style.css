@@ -225,6 +225,57 @@ footer .lic { margin-left: auto; opacity: .72; }
    and muted already, and dimming it further would drop it under 3:1 contrast. */
 footer .tm { width: 100%; margin: 10px 0 0; font-size: 13px; line-height: 1.55; }
 
+
+/* ---------------- screenshot zoom ---------------- */
+
+/* The screenshots are 1919px wide and this column is 960, so they render at half scale and the
+   Editor's own ~11px interface text lands at ~5px: present, but not readable. The fix is to let
+   the reader open the file at its own size.
+   It is a real link FIRST. With no JavaScript the click still opens the image; the script at the
+   end of the page only upgrades that link into an overlay. Nothing here depends on the script. */
+a.zoom { display: block; position: relative; }
+a.zoom::after {
+  content: "\2922";                       /* diagonal arrow: monochrome, unlike a magnifier emoji */
+  position: absolute; right: 12px; bottom: 12px; width: 34px; height: 34px;
+  display: grid; place-items: center; border-radius: 8px;
+  background: rgba(11, 9, 8, .82); border: 1px solid var(--line);
+  color: var(--text); font-size: 18px; line-height: 1;
+  /* visible at rest, because a touch screen has no hover to reveal it with */
+  opacity: .55; transition: opacity .14s ease;
+}
+a.zoom:hover::after, a.zoom:focus-visible::after { opacity: 1; }
+a.zoom:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+dialog.lb {
+  max-width: 96vw; max-height: 94vh; padding: 0; border: 0;
+  background: transparent; overflow: visible;
+}
+dialog.lb::backdrop { background: rgba(6, 5, 4, .88); }
+dialog.lb img {
+  display: block; max-width: 96vw; max-height: 94vh; width: auto; height: auto;
+  border-radius: 10px; border: 1px solid #2A2521;
+  cursor: zoom-in;
+}
+
+/* Second state. Fitting the window is only 72% of the file on a 1440x900 screen, because the
+   height is what binds -- and at 72% the Editor's interface text is still small. So a click on
+   the image drops the fit and shows it at 1:1, with the overlay scrolling. Clicking again goes
+   back. This is the behaviour a store gallery has, and it is what actually makes the text
+   readable: at 1:1 the pixels are the ones the capture was taken with. */
+dialog.lb.real { overflow: auto; max-width: 96vw; max-height: 94vh; }
+dialog.lb.real img { max-width: none; max-height: none; cursor: zoom-out; border-radius: 0; }
+dialog.lb .x {
+  position: absolute; top: 8px; right: 8px; width: 38px; height: 38px;
+  border-radius: 9px; cursor: pointer;
+  background: rgba(11, 9, 8, .9); border: 1px solid #2A2521;
+  color: #C4BEB7; font-size: 21px; line-height: 1;
+}
+dialog.lb .x:hover { color: #F4F1EC; border-color: #F7AC15; }
+
+@media (max-width: 700px) {
+  a.zoom::after { width: 30px; height: 30px; right: 9px; bottom: 9px; font-size: 16px; }
+}
+
 /* ---------------- narrow screens ---------------- */
 
 @media (max-width: 700px) {
