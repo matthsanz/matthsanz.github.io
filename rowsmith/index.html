@@ -76,7 +76,7 @@
         <code>6000.0.66</code>.
       </li>
       <li>
-        <b>Unity 6.3 and 6.5 are not supported in this version.</b> Unity is replacing an editor API
+        <b>Unity 6.3 and 6.5 are not supported in this version.</b> Unity Technologies is replacing an editor API
         this tool reads values with, and on 6.5 that replacement is already enforced, so the tool
         does not compile there. Support for them is planned, and it needs a build of its own rather
         than a change to this one.
@@ -109,10 +109,10 @@
       <li>An import updates assets that already exist. <strong>It never creates new ones.</strong></li>
       <li>Sub-assets are not listed. A file holding several objects shows only its main one.</li>
       <li>ScriptableObjects that live under <code>Packages/</code> are not listed.</li>
-      <li>Recompiling a script can clear Unity's undo stack, and your batch or import would go with it.</li>
+      <li>Recompiling a script can clear the undo stack in the Unity Editor, and your batch or import would go with it.</li>
       <li>
         An undo happens in the editor's memory. The files on disk only change when you save — this
-        is how Unity behaves everywhere, and Rowsmith says so in the status bar when it matters.
+        is how the Unity Editor behaves everywhere, and Rowsmith says so in the status bar when it matters.
       </li>
     </ul>
 
@@ -137,6 +137,11 @@
     <a class="lic" href="../assets/fontes/Inter-LICENSE-OFL.txt"
        target="_blank" rel="noopener"
        aria-label="Inter typeface licence, SIL Open Font License — opens in a new tab">Inter (OFL)</a>
+    <!-- Trademark notice. The "Guidelines for Using Unity Trademarks" (v. 4.2) require
+         it on any published material that features Unity trademarks, and they give the
+         wording; this is that wording, filled in. It sits on its own line under the
+         links because it is a legal note, not navigation. -->
+    <p class="tm">This website is not sponsored by or affiliated with Unity Technologies or its affiliates. Unity is a trademark or registered trademark of Unity Technologies or its affiliates in the U.S. and elsewhere.</p>
   </div>
 </footer>
 

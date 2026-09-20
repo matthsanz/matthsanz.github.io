@@ -220,6 +220,11 @@ footer .who { color: var(--text); font-weight: 600; }
    reads as a credit rather than as one more page of the site. */
 footer .lic { margin-left: auto; opacity: .72; }
 
+/* The trademark notice required by Unity's trademark guidelines. Full width so it
+   wraps onto its own line inside the flex bar, and no extra opacity: it is small
+   and muted already, and dimming it further would drop it under 3:1 contrast. */
+footer .tm { width: 100%; margin: 10px 0 0; font-size: 13px; line-height: 1.55; }
+
 /* ---------------- narrow screens ---------------- */
 
 @media (max-width: 700px) {
