@@ -48,23 +48,23 @@
   <section class="block">
     <h2>What it does</h2>
 
-    <figure><img src="../assets/01-tabela.png"
-      alt="One asset at a time in the Inspector. All of them at once in the table. The same values, from the same file — 4658, 962, 820, 2025. 30 assets read in 23 ms."></figure>
+    <figure><a class="zoom" href="../assets/01-tabela.png" target="_blank" rel="noopener"><img src="../assets/01-tabela.png"
+      alt="One asset at a time in the Inspector. All of them at once in the table. The same values, from the same file — 4658, 962, 820, 2025. 30 assets read in 23 ms."></a></figure>
 
-    <figure><img src="../assets/02-lote.png"
-      alt="It says what it will do, before it does it. 30 rows, Gold Reward multiplied by 2, and an example you can check against the table itself: Archdemon Overlord, 1984 to 3968."></figure>
+    <figure><a class="zoom" href="../assets/02-lote.png" target="_blank" rel="noopener"><img src="../assets/02-lote.png"
+      alt="It says what it will do, before it does it. 30 rows, Gold Reward multiplied by 2, and an example you can check against the table itself: Archdemon Overlord, 1984 to 3968."></a></figure>
 
-    <figure><img src="../assets/03-relatorio.png"
-      alt="And then it says what it did. 30 rows changed in 457 ms. The Inspector agrees: 2025 became 4050."></figure>
+    <figure><a class="zoom" href="../assets/03-relatorio.png" target="_blank" rel="noopener"><img src="../assets/03-relatorio.png"
+      alt="And then it says what it did. 30 rows changed in 457 ms. The Inspector agrees: 2025 became 4050."></a></figure>
 
-    <figure><img src="../assets/04-recusa.png"
-      alt="It refuses rather than break your data. A value the enum does not have is rejected, the cell stays as it was — and the message names the ones that fit."></figure>
+    <figure><a class="zoom" href="../assets/04-recusa.png" target="_blank" rel="noopener"><img src="../assets/04-recusa.png"
+      alt="It refuses rather than break your data. A value the enum does not have is rejected, the cell stays as it was — and the message names the ones that fit."></a></figure>
 
-    <figure><img src="../assets/05-filtro.png"
-      alt="The filter rules the batch. Tier is Boss leaves 6 rows of 30, and the bulk edit says 6 rows — not 30."></figure>
+    <figure><a class="zoom" href="../assets/05-filtro.png" target="_blank" rel="noopener"><img src="../assets/05-filtro.png"
+      alt="The filter rules the batch. Tier is Boss leaves 6 rows of 30, and the bulk edit says 6 rows — not 30."></a></figure>
 
-    <figure><img src="../assets/06-escala.png"
-      alt="2,880 rows. No paging, no ceiling. Read in 226 ms, and the table scrolls all the way down. The 2,880 assets were duplicated locally for this test. The package ships 30 samples."></figure>
+    <figure><a class="zoom" href="../assets/06-escala.png" target="_blank" rel="noopener"><img src="../assets/06-escala.png"
+      alt="2,880 rows. No paging, no ceiling. Read in 226 ms, and the table scrolls all the way down. The 2,880 assets were duplicated locally for this test. The package ships 30 samples."></a></figure>
   </section>
 
   <section class="prose">
@@ -144,6 +144,40 @@
     <p class="tm">This website is not sponsored by or affiliated with Unity Technologies or its affiliates. Unity is a trademark or registered trademark of Unity Technologies or its affiliates in the U.S. and elsewhere.</p>
   </div>
 </footer>
+
+<!-- The screenshot overlay. It upgrades the links written above; it never replaces them.
+     If this script does not run, every <a class="zoom"> still opens the full image. -->
+<dialog class="lb" id="lb">
+  <img alt="">
+  <button type="button" class="x" aria-label="Close">&times;</button>
+</dialog>
+<script>
+(function () {
+  var d = document.getElementById('lb');
+  if (!d || !d.showModal) { return; }          /* no <dialog> support: leave the links alone */
+  var big = d.querySelector('img');
+  var links = document.querySelectorAll('a.zoom');
+  for (var i = 0; i < links.length; i++) {
+    links[i].addEventListener('click', function (e) {
+      /* let the reader still open it in a new tab on purpose */
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) { return; }
+      e.preventDefault();
+      big.src = this.getAttribute('href');
+      big.alt = this.querySelector('img').getAttribute('alt');
+      d.showModal();
+    });
+  }
+  /* A click ON the image toggles between fitting the window and 1:1. Fitting is only ~72% of
+     the file on a 1440x900 screen, and the interface text needs the real pixels to be read. */
+  big.addEventListener('click', function () { d.classList.toggle('real'); });
+  /* a click on the backdrop or on the close button lands on something other than the image */
+  d.addEventListener('click', function (e) { if (e.target !== big) { d.close(); } });
+  /* always reopen in the fitting state, never in whatever the last reader left behind */
+  d.addEventListener('close', function () { d.classList.remove('real'); });
+  /* drop the source on close so a big PNG is not held in memory by a hidden dialog */
+  d.addEventListener('close', function () { big.removeAttribute('src'); });
+})();
+</script>
 
 </body>
 </html>
