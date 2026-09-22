@@ -23,7 +23,10 @@
 
 <header class="top">
   <div class="bar">
-    <a class="mark" href="./">Matthsanz</a>
+    <!-- The mark is the same image as the X avatar and the publisher profile, so the three
+         places a buyer can meet the name look like one person. alt is empty on purpose: the
+         name is written right next to it, and reading it twice helps nobody. -->
+    <a class="mark" href="./"><img src="assets/marca.png" alt="" width="26" height="26">Matthsanz</a>
     <nav>
       <a href="rowsmith/">Rowsmith</a>
       <a href="support/">Support</a>
@@ -31,7 +34,7 @@
   </div>
 </header>
 
-<main>
+<main class="home">
 
   <!-- The heading is off-screen, not absent: the page still needs one H1 for
        screen readers and search results, and the header already says the name
@@ -39,8 +42,10 @@
   <h1 class="offscreen">Matthsanz — Unity Editor tools</h1>
 
   <!-- Words first, screenshot second. The other way round opened the page on a
-       raw capture with nothing to read, and the top went dead. -->
-  <section class="block first">
+       raw capture with nothing to read, and the top went dead.
+       No line above the card on purpose: the page does not need to explain itself, and a
+       tagline there was tried on 22/09 and turned down. The card sits on the forge glow. -->
+  <section class="block card">
     <a class="product" href="rowsmith/">
       <div class="body">
         <div class="name"><span class="row">Row</span>smith</div>
@@ -51,14 +56,16 @@
           the two:</strong> it shows you the whole list of what will change — with a real example,
           taken from your own data — <strong>before the first file is written</strong>.
         </p>
-        <span class="go">See Rowsmith →</span>
+        <span class="go">See Rowsmith <span class="arr">→</span></span>
       </div>
       <img class="shot" src="assets/tabela.png"
            alt="The Rowsmith window open in the Unity Editor, showing a table of ScriptableObject assets as rows.">
     </a>
   </section>
 
-  <section class="prose">
+  <!-- block, not prose: on the home everything shares the card's left edge. With two
+       widths the edge jumped about 70px between the card and the sections under it. -->
+  <section class="block">
     <h2>How I work</h2>
     <ul class="grid">
       <li>
@@ -80,11 +87,11 @@
     </ul>
   </section>
 
-  <section class="prose">
+  <section class="block">
     <h2>Contact</h2>
     <p><a class="mail" href="mailto:rowsmith.support@gmail.com">rowsmith.support@gmail.com</a></p>
     <p>
-      Expect a reply within 24–48 hours.
+      Expect a reply within <span class="nw">24–48</span> hours.
       <a href="support/">What to send with it →</a>
     </p>
   </section>

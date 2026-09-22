@@ -22,11 +22,14 @@
   --accent:  #F7AC15;
   --accent-lo:#B76C06;
 
-  /* type scale, ratio ~1.4 — the missing middle steps are the point */
+  /* type scale — five levels, and each one clearly apart from the next: label 13 · body 17 ·
+     lede 24 · section 24 bold · display 44/52. Before, 15-16-17-18-19px sat next to each other
+     and elements of different rank came out the same size. */
   --t-sm: 14px;
   --t-body: 17px;
-  --t-lede: 21px;
-  --t-h2: 28px;
+  --t-lede: 24px;
+  --t-h2: 24px;
+  --t-display: 44px;
   --t-h1: 52px;
 
   /* two widths, on purpose: prose stays readable, blocks breathe wider */
@@ -36,6 +39,10 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+/* dark for the browser's own parts too: without it, Windows draws a light scrollbar
+   down the side of a dark site */
+html { color-scheme: dark; }
+::selection { background: rgba(247,172,21,.32); color: var(--strong); }
 
 body {
   margin: 0; background: var(--bg); color: var(--text);
@@ -47,24 +54,38 @@ body {
 .prose, .block {
   width: 100%; margin-left: auto; margin-right: auto; padding-left: 26px; padding-right: 26px;
 }
-.prose { max-width: calc(var(--prose) + 52px); }
+/* ONE left edge on every page, the header's. Prose still reads at --prose wide (each child
+   is capped), but it starts where the wide blocks and the header start: with two centred
+   columns the edge jumped between 240, 344 and 370px on the same page. */
+.prose { max-width: calc(var(--block) + 52px); }
+.prose > * { max-width: var(--prose); }
 .block { max-width: calc(var(--block) + 52px); }
 
 /* ---------------- header ---------------- */
 
-header.top { border-bottom: 1px solid var(--line-lo); }
+/* The amber thread on top is the promo banner's: the same colour at half strength.
+   It is the one line of brand that every page carries. */
+header.top { border-top: 3px solid rgba(247,172,21,.5); border-bottom: 1px solid var(--line-lo); }
+/* centre, not baseline: the mark is an image, and a flex row aligned on baselines puts the
+   bottom edge of the image on the text line and lifts the name above the nav links */
 header.top .bar {
-  max-width: calc(var(--block) + 52px); margin: 0 auto; padding: 20px 26px;
-  display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap;
+  max-width: calc(var(--block) + 52px); margin: 0 auto; padding: 18px 26px;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
 }
 header.top .mark {
   color: var(--strong); text-decoration: none;
   font-weight: 700; font-size: 18px; letter-spacing: -.2px;
+  display: inline-flex; align-items: center; gap: 11px;
+}
+header.top .mark img {
+  display: block; width: 26px; height: 26px; border-radius: 7px;
+  box-shadow: 0 0 0 1px var(--line);
 }
 header.top .mark:hover { color: var(--strong); }
 header.top nav { margin-left: auto; display: flex; gap: 24px; }
 header.top nav a {
   color: var(--muted); text-decoration: none; font-size: 15px; font-weight: 500;
+  padding: 6px 0;   /* a finger-sized target, not just the height of the letters */
 }
 header.top nav a:hover { color: var(--strong); }
 header.top nav a.here { color: var(--accent); }
@@ -78,47 +99,62 @@ header.top nav a.here { color: var(--accent); }
   clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
 }
 
-/* The home has no hero, so its first block carries the top space itself.
-   84px matches .hero on the other pages, so all three start at the same height. */
-section.first { padding-top: 84px; }
-
-.hero { padding: 84px 0 20px; }
+/* top and bottom only: the shorthand "padding: 84px 0 20px" used to zero the side padding
+   .prose gives, and pushed every hero 26px left of the page it opens */
+.hero { padding-top: 84px; padding-bottom: 20px; }
 h1 {
   font-size: clamp(38px, 6.4vw, var(--t-h1)); font-weight: 700; letter-spacing: -1.5px;
   line-height: 1.05; color: var(--strong); margin: 0 0 16px;
 }
 h1 .row { color: var(--accent); }
+/* The line under the title is the page's second voice, so it reads before the paragraph:
+   bigger and lighter than it used to be. Measured before: it weighed less than the bold
+   first sentence of the paragraph below it, and the eye skipped it. */
 .lede {
-  font-size: clamp(18px, 2.4vw, var(--t-lede)); line-height: 1.5;
-  color: var(--muted); font-weight: 500; margin: 0; letter-spacing: -.2px;
+  font-size: clamp(19px, 2.6vw, var(--t-lede)); line-height: 1.4;
+  color: var(--text); font-weight: 500; margin: 0; letter-spacing: -.4px;
 }
+/* in the opening paragraph, emphasis is carried by colour (white on grey), not by weight,
+   so it stops competing with the line above */
+.hero p strong { font-weight: 500; }
 .hero .lede + p { margin-top: 26px; }
 
 /* ---------------- sections ---------------- */
 
-section { padding-top: 76px; }
+section { padding-top: 88px; }
 
 h2 {
-  font-size: var(--t-h2); font-weight: 700; letter-spacing: -.7px; line-height: 1.2;
-  color: var(--strong); margin: 0 0 26px; position: relative; padding-left: 18px;
+  font-size: var(--t-h2); font-weight: 700; letter-spacing: -.5px; line-height: 1.25;
+  color: var(--strong); margin: 0 0 20px; position: relative; padding-left: 16px;
 }
 h2::before {
   content: ""; position: absolute; left: 0; top: .18em; bottom: .18em;
-  width: 4px; border-radius: 2px; background: var(--accent);
+  width: 4px; border-radius: 2px; background: linear-gradient(180deg, #FFD87A, #E19105);
 }
 
 h3 { font-size: 19px; font-weight: 600; color: var(--strong); margin: 30px 0 8px; }
+/* no lone word on a last line: balanced headings, "pretty" paragraphs (ignored, harmlessly,
+   by browsers that do not know it) */
+h1, h2 { text-wrap: balance; }
+p, li { text-wrap: pretty; }
+/* a range such as "24-48" never splits across two lines: browsers may break after a dash,
+   and "24-" at the end of one line with "48 hours" on the next reads as two numbers */
+.nw { white-space: nowrap; }
 
 p { margin: 0 0 20px; }
 p:last-child { margin-bottom: 0; }
 strong, b { color: var(--strong); font-weight: 600; }
-a { color: var(--accent); text-decoration-color: var(--accent-lo); text-underline-offset: 3px; }
+a {
+  color: var(--accent); text-decoration-color: var(--accent-lo); text-underline-offset: 3px;
+  transition: color .15s ease, text-decoration-color .15s ease;
+}
 a:hover { color: var(--strong); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
 
 code {
   font-family: "Cascadia Mono", Consolas, ui-monospace, monospace; font-size: .87em;
-  background: var(--raised); color: var(--strong);
-  padding: 2px 7px; border-radius: 5px; border: 1px solid var(--line);
+  background: var(--raised); color: var(--text);
+  padding: 2px 7px; border-radius: 6px; border: 1px solid var(--line);
 }
 
 ul { margin: 0 0 20px; padding-left: 20px; }
@@ -130,15 +166,26 @@ li::marker { color: var(--accent-lo); }
 .product {
   display: block; text-decoration: none; color: inherit;
   background: var(--raised); border: 1px solid var(--line); border-radius: 14px;
-  overflow: hidden; transition: border-color .18s ease;
+  overflow: hidden;
+  transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease;
 }
-.product:hover { border-color: var(--accent-lo); }
+/* A lift of two pixels and a shadow under it: enough to say "this is one thing you can
+   click", not so much that the card starts moving around under the reader. */
+.product:hover {
+  border-color: var(--accent-lo); transform: translateY(-2px);
+  box-shadow: 0 18px 44px -22px rgba(0,0,0,.9);
+}
+.product:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
 /* The screenshot sits at the BOTTOM, cropped to a strip: it is evidence under
-   the claim, not a picture the visitor has to interpret before reading one. */
+   the claim, not a picture the visitor has to interpret before reading one.
+   object-fit: none shows it at its OWN size (1:1) instead of squeezing 1606px into the
+   card: squeezed, the Editor's text landed at ~5px and the strip read as noise. At 1:1 the
+   names and numbers can be read, and the crop is taken from the top-left corner, where
+   the asset names are -- on a phone too, which used to cut them ("nt Overlord"). */
 .product { position: relative; }
 .product .shot {
-  display: block; width: 100%; height: 300px; object-fit: cover; object-position: top;
+  display: block; width: 100%; height: 300px; object-fit: none; object-position: left top;
   border-top: 1px solid var(--line);
 }
 /* the strip fades out instead of stopping mid-row, so it reads as "there is
@@ -150,25 +197,82 @@ li::marker { color: var(--accent-lo); }
 }
 .product .body { padding: 34px 34px 30px; }
 .product .name {
-  font-size: 32px; font-weight: 700; letter-spacing: -.9px; color: var(--strong);
-  line-height: 1.1; margin-bottom: 4px;
+  font-size: var(--t-display); font-weight: 700; letter-spacing: -1.4px; color: var(--strong);
+  line-height: 1.05; margin-bottom: 8px;
 }
 .product .name .row { color: var(--accent); }
 .product .kind {
-  font-size: var(--t-sm); color: var(--muted); font-weight: 500; letter-spacing: .4px;
+  font-size: 13px; color: var(--muted); font-weight: 600; letter-spacing: .09em;
   text-transform: uppercase; margin-bottom: 20px;
 }
-.product p { margin-bottom: 22px; }
-.product .go { color: var(--accent); font-weight: 600; }
+.product p { margin-bottom: 26px; font-size: 18px; }
+/* The page's one action, drawn as one: a pill. Measured before, "See Rowsmith" was the
+   6th strongest thing on the home, under the e-mail and the bold items of the grid. */
+.product .go {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 18px; border-radius: 999px;
+  color: var(--accent); font-weight: 600; font-size: 16px;
+  background: rgba(247,172,21,.08); box-shadow: inset 0 0 0 1px rgba(247,172,21,.42);
+  transition: background .18s ease, box-shadow .18s ease;
+}
+.product:hover .go { background: rgba(247,172,21,.15); box-shadow: inset 0 0 0 1px rgba(247,172,21,.75); }
+.product .go .arr { display: inline-block; transition: transform .18s ease; }
+.product:hover .go .arr { transform: translateX(4px); }
+
+/* ---------------- the forge glow, behind the card (22/09) ---------------- */
+
+/* Rowsmith is row + smith, and the amber of this site is the colour of hot metal
+   (PALETA.md). So the card sits on heat, not on a pattern: a soft glow rising from its top
+   edge, and the edge itself a little warmer than the other three. No text, no grid -- the
+   spreadsheet look belongs to the X banner, and the site has its own.
+   84px of top space matches .hero on the other pages, so all three start at the same height. */
+section.card { padding-top: 84px; }
+/* The glow lives on the page, not on the card's section: the section is only as wide as the
+   card, and there the heat read as a narrow spotlight cut flat at the header. <main> spans
+   the window without the 100vw trap (100vw counts the scrollbar and makes the page scroll
+   sideways). Two layers: a hot, flat line of light at the card's top edge (--edge), and a
+   deep ember behind the whole card that shows on both sides of it. */
+main { position: relative; isolation: isolate; }
+/* the other pages get the same heat, much fainter, behind their title -- the title sits at
+   the left of the page now, so the glow does too */
+main::before {
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  left: 0; right: 0; top: 0; height: 620px;
+  /* the heat fades in under the header instead of starting hard on its bottom line */
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 110px);
+          mask-image: linear-gradient(180deg, transparent 0, #000 110px);
+  background: radial-gradient(38% 300px at calc(50% - 300px) 130px, rgba(136,73,7,.17), transparent 72%);
+}
+/* the home: wider and taller than the first try, which read as a narrow lamp */
+main.home { --edge: 84px; }
+main.home::before {
+  height: 940px;
+  background:
+    radial-gradient(56% 124px at 50% var(--edge), rgba(247,172,21,.15), rgba(225,145,5,.055) 55%, transparent),
+    radial-gradient(82% 560px at 50% calc(var(--edge) + 270px), rgba(136,73,7,.21), transparent 72%);
+}
+section.card .product { border-top-color: rgba(183,108,6,.6); }
+
+/* The living card. With the pointer on it, the screenshot travels down through all 30 rows
+   of the real table, slowly, and the fade at the bottom lifts so the last rows show; it
+   goes back when the pointer leaves. It says "this is a real, full table" without a word.
+   A phone has no hover, so there it simply stays still. */
+.product .shot { transition: object-position .9s ease; }
+.product:hover .shot {
+  object-position: left bottom;
+  transition: object-position 9s cubic-bezier(.45, 0, .55, 1);
+}
+.product::after { transition: opacity .6s ease; }
+.product:hover::after { opacity: .3; }
 
 /* ---------------- two-column facts ---------------- */
 
 .grid {
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px;
-  background: var(--line-lo); border: 1px solid var(--line-lo); border-radius: 12px;
+  background: var(--line-lo); border: 1px solid var(--line-lo); border-radius: 14px;
   overflow: hidden; list-style: none; padding: 0; margin: 0;
 }
-.grid li { background: var(--bg); padding: 24px 26px; margin: 0; }
+.grid li { background: var(--raised); padding: 24px 26px; margin: 0; }
 .grid li b { display: block; margin-bottom: 4px; font-size: 17px; }
 .grid li span { font-size: 16px; color: var(--muted); line-height: 1.55; }
 
@@ -185,24 +289,27 @@ figure { margin: 0 0 34px; }
 figure:last-of-type { margin-bottom: 0; }
 figure img {
   width: 100%; height: auto; display: block;
-  border: 1px solid var(--line); border-radius: 10px; background: #161616;
+  border: 1px solid var(--line); border-radius: 12px; background: var(--raised);
+  box-shadow: 0 24px 60px -34px rgba(0,0,0,.9);
 }
 
 /* ---------------- callout ---------------- */
 
 .note {
   border-left: 3px solid var(--accent-lo); background: var(--raised);
-  padding: 18px 22px; border-radius: 0 10px 10px 0; margin: 0 0 26px;
+  padding: 18px 22px; border-radius: 0 12px 12px 0; margin: 0 0 26px;
   color: var(--muted);
 }
 .note strong { color: var(--text); }
 
 .mail {
-  font-size: clamp(20px, 3vw, 26px); font-weight: 700; letter-spacing: -.4px;
+  font-size: clamp(22px, 3.4vw, 30px); font-weight: 700; letter-spacing: -.5px;
   color: var(--accent); word-break: break-word; display: inline-block;
   text-decoration: none; border-bottom: 2px solid var(--accent-lo); padding-bottom: 2px;
 }
 .mail:hover { color: var(--strong); border-bottom-color: var(--strong); }
+/* on the home the address is the last, quiet stop -- the product card is what the page is for */
+main.home .mail { font-size: 20px; font-weight: 500; letter-spacing: -.2px; border-bottom-width: 1px; }
 
 /* ---------------- footer ---------------- */
 
@@ -212,13 +319,15 @@ footer .bar {
   display: flex; gap: 10px 26px; flex-wrap: wrap; align-items: baseline;
   font-size: var(--t-sm); color: var(--muted);
 }
-footer a { color: var(--muted); text-decoration: none; }
+footer a { color: var(--muted); text-decoration: none; padding: 4px 0; }
 footer a:hover { color: var(--accent); }
 footer .who { color: var(--text); font-weight: 600; }
 
 /* The font credit sits on the far right, away from the navigation links, so it
    reads as a credit rather than as one more page of the site. */
-footer .lic { margin-left: auto; opacity: .72; }
+/* No extra opacity: at .72 it measured 3.16:1, under the 4.5:1 that small text needs
+   (WCAG 1.4.3). Its place on the far right already says "credit". */
+footer .lic { margin-left: auto; }
 
 /* The trademark notice required by Unity's trademark guidelines. Full width so it
    wraps onto its own line inside the flex bar, and no extra opacity: it is small
@@ -279,17 +388,28 @@ dialog.lb .x:hover { color: #F4F1EC; border-color: #F7AC15; }
 /* ---------------- narrow screens ---------------- */
 
 @media (max-width: 700px) {
-  :root { --t-body: 16px; --t-h2: 24px; }
+  :root { --t-body: 16px; --t-h2: 22px; --t-display: 34px; }
   .prose, .block { padding-left: 20px; padding-right: 20px; }
   header.top .bar { padding: 16px 20px; }
   header.top nav { margin-left: 0; width: 100%; gap: 20px; }
   .hero { padding-top: 52px; }
-  section { padding-top: 56px; }
+  section { padding-top: 64px; }
   .grid { grid-template-columns: 1fr; }
   .product .body { padding: 24px 22px 26px; }
-  .product .name { font-size: 27px; }
+  .product .name { font-size: var(--t-display); }
   /* the strip is cropped by width here, so a tall one shows almost nothing */
   .product .shot { height: 170px; }
   .product::after { height: 70px; }
+  section.card { padding-top: 52px; }
+  main.home { --edge: 52px; }
   footer .bar { padding: 24px 20px 52px; }
+}
+
+/* Anyone who asked the system for less motion gets none: the card still changes colour. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .product, .product .go .arr { transition: none; }
+  .product:hover { transform: none; }
+  .product:hover .go .arr { transform: none; }
+  .product .shot, .product:hover .shot { transition: none; object-position: left top; }
 }
