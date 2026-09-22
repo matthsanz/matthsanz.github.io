@@ -63,9 +63,11 @@ body {
 
 /* ---------------- header ---------------- */
 
-/* The amber thread on top is the promo banner's: the same colour at half strength.
-   It is the one line of brand that every page carries. */
-header.top { border-top: 3px solid rgba(247,172,21,.5); border-bottom: 1px solid var(--line-lo); }
+/* No amber line across the top of the window. It was tried on 22/09 (the promo banner's thread)
+   and, live, read as a defect: at half strength amber over black turns a muddy orange, and an
+   edge-to-edge bar at the very top looks like a browser loading bar. The amber of the site
+   lives in the mark, the forge glow and the button instead. */
+header.top { border-bottom: 1px solid var(--line-lo); }
 /* centre, not baseline: the mark is an image, and a flex row aligned on baselines puts the
    bottom edge of the image on the text line and lifts the name above the nav links */
 header.top .bar {
