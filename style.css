@@ -278,21 +278,87 @@ section.card .product { border-top-color: rgba(183,108,6,.6); }
 .grid li b { display: block; margin-bottom: 4px; font-size: 17px; }
 .grid li span { font-size: 16px; color: var(--muted); line-height: 1.55; }
 
-/* ---------------- plain fact rows ---------------- */
+/* ---------------- compatibility, at a glance (26/09) ---------------- */
 
-.rows { list-style: none; padding: 0; margin: 0; }
-.rows li { padding: 18px 0; border-bottom: 1px solid var(--line-lo); margin: 0; }
-.rows li:first-child { padding-top: 0; }
-.rows li:last-child { border-bottom: none; }
+/* The facts grid again, with a mark in each cell: what works, and what does not. The mark is
+   drawn here and says nothing to a screen reader (the '/ ""' after it); the bold sentence next
+   to it says the same thing in words. The plain rows it replaces were the only use of .rows. */
+.compat li { position: relative; padding-left: 64px; }
+/* a block, so the quieter line keeps its own line height over several lines */
+.compat li span { display: block; }
+.compat li::before {
+  position: absolute; left: 24px; top: 25px; width: 26px; height: 26px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 14px; font-weight: 700; line-height: 1;
+}
+.compat li.yes::before {
+  content: "\2713"; content: "\2713" / "";
+  color: var(--accent); background: rgba(247,172,21,.1); box-shadow: inset 0 0 0 1px rgba(247,172,21,.45);
+}
+.compat li.no::before {
+  content: "\2715"; content: "\2715" / "";
+  color: var(--muted); background: rgba(138,128,120,.08); box-shadow: inset 0 0 0 1px var(--line);
+}
+/* the cell that is a yes gets the warm top edge the home card has */
+.compat li.yes { box-shadow: inset 0 2px 0 rgba(183,108,6,.7); }
+/* The two plain facts are things that work too, so they live in the yes cell, pinned to its
+   foot. Before, they floated under the grid on their own, and the yes cell, whose text is half
+   as long as the no cell's, stood with an empty band at the bottom. */
+.compat li.yes { display: flex; flex-direction: column; }
+.compat li.yes span { margin-bottom: 16px; }
+/* Written as a footnote line, the same pattern as the note under a gallery caption: as tags they
+   did not fit on one line inside the cell (388px), the second one dropped, and the empty band
+   simply moved to the other cell. As a sentence they wrap wherever the width asks. */
+.facts {
+  margin: auto 0 0; padding-top: 12px; border-top: 1px solid var(--line-lo);
+  font-size: 15px; line-height: 1.55;
+}
+/* one fact per line: run together, the line broke inside the second one ("Tested on / Windows
+   11."). Written with .compat in front so it outranks the grid's own .grid li b. */
+.compat .facts b { display: block; margin: 0; font-size: 15px; font-weight: 500; color: var(--text); }
 
-/* ---------------- screenshots ---------------- */
+/* ---------------- screenshots: a gallery (26/09) ---------------- */
 
-figure { margin: 0 0 34px; }
-figure:last-of-type { margin-bottom: 0; }
-figure img {
-  width: 100%; height: auto; display: block;
-  border: 1px solid var(--line); border-radius: 12px; background: var(--raised);
-  box-shadow: 0 24px 60px -34px rgba(0,0,0,.9);
+/* One under the other, the six screenshots took 3,870px of a 6,069px page at 1366x860 (64% of
+   it), and their captions were drawn inside the images, where a phone shrank them to ~6px. Now
+   they sit two to a row, each one a card, with the caption under it as real text. */
+/* The screenshots are not all the same height (968 to 990px once the strip is off), so side by
+   side their captions started up to 5px apart. Each card is a subgrid of two rows, picture and
+   caption, and the two cards of a row share those rows: the captions start on the same line.
+   Space between rows of cards is the cards' own bottom margin, because a gap between grid rows
+   would also open between a picture and its caption; the gallery takes the last one back. */
+.gallery {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 26px;
+  margin-bottom: -28px;
+}
+.gallery figure {
+  margin: 0 0 28px; display: grid; grid-row: span 2; grid-template-rows: subgrid; row-gap: 0;
+  background: var(--raised); border: 1px solid var(--line); border-radius: 14px;
+  overflow: hidden; box-shadow: 0 24px 60px -34px rgba(0,0,0,.9);
+  transition: border-color .18s ease;
+}
+.gallery figure:has(a.zoom:hover), .gallery figure:focus-within { border-color: var(--accent-lo); }
+/* The frame shows the screenshot and leaves out the caption strip drawn at the bottom of the
+   same file. Its shape is the picture's width over its height minus that 200px strip (--ar,
+   written on each link), and the image keeps its own proportions, so the only thing that falls
+   outside the frame is the strip. Opening the image shows the whole file, strip included. */
+.gallery a.zoom { aspect-ratio: var(--ar); overflow: hidden; align-self: start; background: #141414; }
+.gallery a.zoom img { width: 100%; height: auto; display: block; }
+/* inside a card with clipped corners an outline drawn outside the link would be cut off */
+.gallery a.zoom:focus-visible { outline-offset: -3px; border-radius: 0; }
+/* the same two voices as the facts grid on the home: a bold line, then a quieter one */
+/* The caption's top line sits over the last pixel of the picture. Scaled down to a quarter,
+   the picture's bottom pixel mixes in a little of the strip hidden just under it and drew a
+   second, grey line under the first one. Painted above the link (which is positioned). */
+.gallery figcaption {
+  position: relative; margin-top: -1px;
+  padding: 18px 22px 22px; border-top: 1px solid var(--line); background: var(--raised);
+}
+.gallery figcaption b { display: block; font-size: 17px; line-height: 1.45; margin-bottom: 6px; }
+.gallery figcaption span { display: block; font-size: 16px; color: var(--muted); line-height: 1.55; }
+/* the footnote under a caption (how a number was measured, what the package really ships) */
+.gallery figcaption small {
+  display: block; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line-lo);
+  font-size: var(--t-sm); color: var(--muted); line-height: 1.5;
 }
 
 /* ---------------- callout ---------------- */
@@ -397,6 +463,11 @@ dialog.lb .x:hover { color: #F4F1EC; border-color: #F7AC15; }
   .hero { padding-top: 52px; }
   section { padding-top: 64px; }
   .grid { grid-template-columns: 1fr; }
+  .gallery { grid-template-columns: 1fr; margin-bottom: -22px; }
+  .gallery figure { margin-bottom: 22px; }
+  .gallery figcaption { padding: 16px 18px 20px; }
+  .compat li { padding-left: 58px; }
+  .compat li::before { left: 20px; }
   .product .body { padding: 24px 22px 26px; }
   .product .name { font-size: var(--t-display); }
   /* the strip is cropped by width here, so a tall one shows almost nothing */

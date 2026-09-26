@@ -43,52 +43,81 @@
     </p>
   </div>
 
-  <!-- Captions are baked into these images (built in the store-artwork pass);
-       the alt text carries the same words for screen readers and search. -->
+  <!-- The captions are real text now, copied character for character from the approved store
+       captions. The images are the same files as before: each one carries its caption in a
+       200px strip at the bottom, the frame crops that strip away (aspect-ratio = width over
+       height minus 200), and it shows again, caption and all, when the image is opened.
+       The alt keeps the same words for screen readers, so the visible caption is hidden from
+       them rather than read twice. -->
   <section class="block">
     <h2>What it does</h2>
 
-    <figure><a class="zoom" href="../assets/01-tabela.png" target="_blank" rel="noopener"><img src="../assets/01-tabela.png"
-      alt="One asset at a time in the Inspector. All of them at once in the table. The same values, from the same file — 4658, 962, 820, 2025. 30 assets read in 23 ms."></a></figure>
+    <div class="gallery">
+      <figure>
+        <a class="zoom" href="../assets/01-tabela.png" target="_blank" rel="noopener" style="--ar: 1919 / 968"><img src="../assets/01-tabela.png"
+          alt="One asset at a time in the Inspector. All of them at once in the table. The same values, from the same file — 4658, 962, 820, 2025. 30 assets read in 23 ms."></a>
+        <figcaption aria-hidden="true"><b>One asset at a time in the Inspector. All of them at once in the table.</b> <span>The same values, from the same file — 4658, 962, 820, 2025.</span> <small>30 assets read in 23 ms.</small></figcaption>
+      </figure>
 
-    <figure><a class="zoom" href="../assets/02-lote.png" target="_blank" rel="noopener"><img src="../assets/02-lote.png"
-      alt="It says what it will do, before it does it. 30 rows, Gold Reward multiplied by 2, and an example you can check against the table itself: Archdemon Overlord, 1984 to 3968."></a></figure>
+      <figure>
+        <a class="zoom" href="../assets/02-lote.png" target="_blank" rel="noopener" style="--ar: 1919 / 990"><img src="../assets/02-lote.png"
+          alt="It says what it will do, before it does it. 30 rows, Gold Reward multiplied by 2, and an example you can check against the table itself: Archdemon Overlord, 1984 to 3968."></a>
+        <figcaption aria-hidden="true"><b>It says what it will do, before it does it.</b> <span>30 rows, Gold Reward multiplied by 2, and an example you can check against the table itself: Archdemon Overlord, 1984 → 3968.</span></figcaption>
+      </figure>
 
-    <figure><a class="zoom" href="../assets/03-relatorio.png" target="_blank" rel="noopener"><img src="../assets/03-relatorio.png"
-      alt="And then it says what it did. 30 rows changed in 457 ms. The Inspector agrees: 2025 became 4050."></a></figure>
+      <figure>
+        <a class="zoom" href="../assets/03-relatorio.png" target="_blank" rel="noopener" style="--ar: 1912 / 985"><img src="../assets/03-relatorio.png"
+          alt="And then it says what it did. 30 rows changed in 457 ms. The Inspector agrees: 2025 became 4050."></a>
+        <figcaption aria-hidden="true"><b>And then it says what it did.</b> <span>30 rows changed in 457 ms. The Inspector agrees: 2025 became 4050.</span></figcaption>
+      </figure>
 
-    <figure><a class="zoom" href="../assets/04-recusa.png" target="_blank" rel="noopener"><img src="../assets/04-recusa.png"
-      alt="It refuses rather than break your data. A value the enum does not have is rejected, the cell stays as it was — and the message names the ones that fit."></a></figure>
+      <figure>
+        <a class="zoom" href="../assets/04-recusa.png" target="_blank" rel="noopener" style="--ar: 1919 / 988"><img src="../assets/04-recusa.png"
+          alt="It refuses rather than break your data. A value the enum does not have is rejected, the cell stays as it was — and the message names the ones that fit."></a>
+        <figcaption aria-hidden="true"><b>It refuses rather than break your data.</b> <span>A value the enum does not have is rejected, the cell stays as it was — and the message names the ones that fit.</span></figcaption>
+      </figure>
 
-    <figure><a class="zoom" href="../assets/05-filtro.png" target="_blank" rel="noopener"><img src="../assets/05-filtro.png"
-      alt="The filter rules the batch. Tier is Boss leaves 6 rows of 30, and the bulk edit says 6 rows — not 30."></a></figure>
+      <figure>
+        <a class="zoom" href="../assets/05-filtro.png" target="_blank" rel="noopener" style="--ar: 1919 / 985"><img src="../assets/05-filtro.png"
+          alt="The filter rules the batch. Tier is Boss leaves 6 rows of 30, and the bulk edit says 6 rows — not 30."></a>
+        <figcaption aria-hidden="true"><b>The filter rules the batch.</b> <span>Tier is Boss leaves 6 rows of 30, and the bulk edit says 6 rows — not 30.</span></figcaption>
+      </figure>
 
-    <figure><a class="zoom" href="../assets/06-escala.png" target="_blank" rel="noopener"><img src="../assets/06-escala.png"
-      alt="2,880 rows. No paging, no ceiling. Read in 226 ms, and the table scrolls all the way down. The 2,880 assets were duplicated locally for this test. The package ships 30 samples."></a></figure>
+      <figure>
+        <a class="zoom" href="../assets/06-escala.png" target="_blank" rel="noopener" style="--ar: 1919 / 990"><img src="../assets/06-escala.png"
+          alt="2,880 rows. No paging, no ceiling. Read in 226 ms, and the table scrolls all the way down. The 2,880 assets were duplicated locally for this test. The package ships 30 samples."></a>
+        <figcaption aria-hidden="true"><b>2,880 rows. No paging, no ceiling.</b> <span>Read in 226 ms, and the table scrolls all the way down.</span> <small>The 2,880 assets were duplicated locally for this test. The package ships 30 samples.</small></figcaption>
+      </figure>
+    </div>
   </section>
 
-  <section class="prose">
+  <!-- Same words as before, laid out to be taken in at a glance: what works, with the two plain
+       facts that also work at its foot, and what does not. The marks are drawn by the stylesheet
+       and carry no text of their own; the sentence next to each one says it in words. -->
+  <section class="block">
     <h2>Compatibility</h2>
-    <ul class="rows">
-      <li>
-        <b>Unity 2022.3.62 through Unity 6.0 LTS.</b> Both ends were tested by importing this exact
+    <ul class="grid compat">
+      <li class="yes">
+        <b>Unity 2022.3.62 through Unity 6.0 LTS.</b>
+        <span>Both ends were tested by importing this exact
         package into an empty project and using it: <code>2022.3.62f3</code> and
-        <code>6000.0.66</code>.
+        <code>6000.0.66</code>.</span>
+        <p class="facts"><b>No render pipeline dependency.</b> <b>Tested on Windows 11.</b></p>
       </li>
-      <li>
-        <b>Unity 6.3 and 6.5 are not supported in this version.</b> Unity Technologies is replacing an editor API
+      <li class="no">
+        <b>Unity 6.3 and 6.5 are not supported in this version.</b>
+        <span>Unity Technologies is replacing an editor API
         this tool reads values with, and on 6.5 that replacement is already enforced, so the tool
         does not compile there. Support for them is planned, and it needs a build of its own rather
-        than a change to this one.
+        than a change to this one.</span>
       </li>
-      <li><b>No render pipeline dependency.</b> <b>Tested on Windows 11.</b></li>
     </ul>
   </section>
 
   <section class="prose">
     <h2>What it touches, and what it does not</h2>
     <ul>
-      <li>It works <strong>offline</strong>. No network access, no telemetry, no account, no activation.</li>
+      <li>It works <strong>offline</strong>. No network access, no telemetry.</li>
       <li>It <strong>reads</strong> <code>.asset</code> files under <code>Assets/</code>. It does not read <code>Packages/</code>.</li>
       <li>It <strong>exports</strong> only to the file you pick in the save dialog, and <strong>imports</strong> only the file you pick.</li>
       <li><strong>The tool itself is Editor-only and adds nothing to your build.</strong></li>
