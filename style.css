@@ -221,6 +221,20 @@ li::marker { color: var(--accent-lo); }
 .product .go .arr { display: inline-block; transition: transform .18s ease; }
 .product:hover .go .arr { transform: translateX(4px); }
 
+/* The store button on the product page (02/10): the same pill as the home card's action,
+   so the site has one way of drawing "go here". */
+.hero .buy { margin-top: 28px; }
+.hero .go {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 18px; border-radius: 999px;
+  color: var(--accent); font-weight: 600; font-size: 16px; text-decoration: none;
+  background: rgba(247,172,21,.08); box-shadow: inset 0 0 0 1px rgba(247,172,21,.42);
+  transition: background .18s ease, box-shadow .18s ease;
+}
+.hero .go:hover { background: rgba(247,172,21,.15); box-shadow: inset 0 0 0 1px rgba(247,172,21,.75); }
+.hero .go .arr { display: inline-block; transition: transform .18s ease; }
+.hero .go:hover .arr { transform: translateX(4px); }
+
 /* ---------------- the forge glow, behind the card (22/09) ---------------- */
 
 /* Rowsmith is row + smith, and the amber of this site is the colour of hot metal
@@ -481,7 +495,8 @@ dialog.lb .x:hover { color: #F4F1EC; border-color: #F7AC15; }
 /* Anyone who asked the system for less motion gets none: the card still changes colour. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .product, .product .go .arr { transition: none; }
+  .product, .product .go .arr, .hero .go .arr { transition: none; }
+  .hero .go:hover .arr { transform: none; }
   .product:hover { transform: none; }
   .product:hover .go .arr { transform: none; }
   .product .shot, .product:hover .shot { transition: none; object-position: left top; }
