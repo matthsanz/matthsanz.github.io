@@ -351,12 +351,17 @@ section.card .product { border-top-color: rgba(183,108,6,.6); }
   transition: border-color .18s ease;
 }
 .gallery figure:has(a.zoom:hover), .gallery figure:focus-within { border-color: var(--accent-lo); }
-/* The frame shows the screenshot and leaves out the caption strip drawn at the bottom of the
-   same file. Its shape is the picture's width over its height minus that 200px strip (--ar,
-   written on each link), and the image keeps its own proportions, so the only thing that falls
-   outside the frame is the strip. Opening the image shows the whole file, strip included. */
+/* The frame shows the screenshot and leaves out the caption drawn inside the same file (see
+   --ar and --top below). Opening the image shows the whole file, caption included. */
 .gallery a.zoom { aspect-ratio: var(--ar); overflow: hidden; align-self: start; background: #141414; }
-.gallery a.zoom img { width: 100%; height: auto; display: block; }
+.gallery a.zoom img { width: 100%; height: auto; display: block; margin-top: calc(var(--top, 0) * -1%); }
+/* 05/10: the 1.0.1 pictures carry their caption INSIDE the file, on top or at the bottom. --ar is the
+   content window (2400 by 1037 px) and --top shifts the picture up by where that window starts,
+   as a percent of the width (a vertical margin in % is measured against the width). */
+/* the word color in three colors, as in the picture: the status bar's green, coral and amber */
+.gallery figcaption b span { display: inline; font-size: inherit; line-height: inherit; }
+.gallery figcaption .c-g { color: #62C980; } .gallery figcaption .c-r { color: #FF7A6B; }
+.gallery figcaption .c-a { color: var(--accent); }
 /* inside a card with clipped corners an outline drawn outside the link would be cut off */
 .gallery a.zoom:focus-visible { outline-offset: -3px; border-radius: 0; }
 /* the same two voices as the facts grid on the home: a bold line, then a quieter one */
