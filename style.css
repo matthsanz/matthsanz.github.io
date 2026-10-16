@@ -319,6 +319,8 @@ section.card .product { border-top-color: rgba(183,108,6,.6); }
    as long as the no cell's, stood with an empty band at the bottom. */
 .compat li.yes { display: flex; flex-direction: column; }
 .compat li.yes span { margin-bottom: 16px; }
+/* 16/10, 1.1.0: nothing left to say in a no cell, so the yes cell takes the whole row. */
+.compat.single { grid-template-columns: 1fr; }
 /* Written as a footnote line, the same pattern as the note under a gallery caption: as tags they
    did not fit on one line inside the cell (388px), the second one dropped, and the empty band
    simply moved to the other cell. As a sentence they wrap wherever the width asks. */
